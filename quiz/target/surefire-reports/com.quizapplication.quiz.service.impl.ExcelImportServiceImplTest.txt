@@ -1,0 +1,30 @@
+-------------------------------------------------------------------------------
+Test set: com.quizapplication.quiz.service.impl.ExcelImportServiceImplTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 0.945 s <<< FAILURE! -- in com.quizapplication.quiz.service.impl.ExcelImportServiceImplTest
+com.quizapplication.quiz.service.impl.ExcelImportServiceImplTest.testImportQuizDataFromExcel_Success -- Time elapsed: 0.126 s <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Only void methods can doNothing()!
+Example of correct use of doNothing():
+    doNothing().
+    doThrow(new RuntimeException())
+    .when(mock).someVoidMethod();
+Above means:
+someVoidMethod() does nothing the 1st time but throws an exception the 2nd time is called
+	at com.quizapplication.quiz.service.impl.ExcelImportServiceImplTest.testImportQuizDataFromExcel_Success(ExcelImportServiceImplTest.java:40)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.quizapplication.quiz.service.impl.ExcelImportServiceImplTest.testImportQuizDataFromExcel_InvalidData -- Time elapsed: 0.232 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3115)
+	at com.quizapplication.quiz.service.impl.ExcelImportServiceImplTest.testImportQuizDataFromExcel_InvalidData(ExcelImportServiceImplTest.java:51)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+

@@ -1,0 +1,37 @@
+-------------------------------------------------------------------------------
+Test set: com.quizapplication.quiz.controller.QuizControllerTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 3.182 s <<< FAILURE! -- in com.quizapplication.quiz.controller.QuizControllerTest
+com.quizapplication.quiz.controller.QuizControllerTest.testAddQuestion_InternalServerError -- Time elapsed: 0.337 s <<< FAILURE!
+java.lang.AssertionError: Response content expected:<> but was:<JSON parse error: Cannot construct instance of `com.quizapplication.quiz.entity.Question`, problem: Cannot invoke "java.util.List.iterator()" because "this.options" is null>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.ContentResultMatchers.lambda$string$4(ContentResultMatchers.java:148)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.quizapplication.quiz.controller.QuizControllerTest.testAddQuestion_InternalServerError(QuizControllerTest.java:74)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.quizapplication.quiz.controller.QuizControllerTest.testAddQuestion_Success -- Time elapsed: 0.032 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<201> but was:<500>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.quizapplication.quiz.controller.QuizControllerTest.testAddQuestion_Success(QuizControllerTest.java:51)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.quizapplication.quiz.controller.QuizControllerTest.testAddQuestion_InvalidRequest -- Time elapsed: 0.022 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<400> but was:<500>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.quizapplication.quiz.controller.QuizControllerTest.testAddQuestion_InvalidRequest(QuizControllerTest.java:62)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
