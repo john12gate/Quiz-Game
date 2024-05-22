@@ -1,9 +1,6 @@
 # Quiz Game Application Backend
 
-![GitHub stars](https://img.shields.io/github/stars/yourusername/quiz-game-backend)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/quiz-game-backend)
-![GitHub issues](https://img.shields.io/github/issues/yourusername/quiz-game-backend)
-![GitHub license](https://img.shields.io/github/license/yourusername/quiz-game-backend)
+![GitHub stars](https://img.ields.io/github/stars/john12gate/quiz-game) ![GitHub forks](https://img.ields.io/github/forks/john12gate/quiz-game) ![GitHub issues](https://img.ields.io/github/issues/john12gate/quiz-game) ![GitHub license](https://img.ields.io/github/license/john12gate/quiz-game)
 
 Welcome to the **Quiz Game Application Backend**, a sophisticated and comprehensive API designed to manage quiz questions, track scores, and provide a seamless experience for developers and quiz enthusiasts alike.
 
@@ -29,192 +26,182 @@ Ensure you have the following installed:
 - Java 17 or higher
 - Spring Boot
 - Maven
-- PostgreSQL
+- H2 Database
 
 ### Installation
 
 1. **Clone the Repository**
-   ```sh
-   git clone https://github.com/yourusername/quiz-game-backend.git
-   cd quiz-game-backend
-Configure Database
-Update the application.properties file with your PostgreSQL database details:
+   ```
+   git clone https://github.com/john12gate/quiz-game.git
+   cd quiz-game
+   
+## Configure Database
 
-properties
-Copy code
-spring.datasource.url=jdbc:postgresql://localhost:5432/yourdatabase
-spring.datasource.username=yourusername
-spring.datasource.password=yourpassword
-Build and Run the Application
+Update the `application.yaml` file with your H2 database details:
 
-sh
-Copy code
-mvn clean install
-mvn spring-boot:run
-API Endpoints
-Home Endpoint
-http
-Copy code
-GET /
-Retrieve All Questions
-http
-Copy code
-GET /api/questions
-Response Codes:
+```yaml
+spring:
+  datasource:
+    url: jdbc:h2:mem:quiz-app-db
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+    hikari:
+      pool-name: HikariCP
+      maximum-pool-size: 10
+      minimum-idle: 15
+      idle-timeout: 30000
+      connection-timeout: 20000
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          batch_size: 50
+          fetch_size: 50
+  open-in-view: false
+liquibase:
+  enabled: true
+  change-log: classpath:/db/changelog/db.changelog-master.yaml
 
-200 OK: Successfully retrieved the list of questions.
-400 Bad Request: Invalid request parameters.
-500 Internal Server Error: Server error.
-Retrieve Question by ID
-http
-Copy code
-GET /api/questions/{id}
-Response Codes:
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 
-200 OK: Successfully retrieved the question.
-404 Not Found: Question not found.
-500 Internal Server Error: Server error.
-Add New Question
-http
-Copy code
-POST /api/questions
-Response Codes:
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+    min-response-size: 2048
 
-201 Created: Successfully created the question.
-400 Bad Request: Invalid request body.
-500 Internal Server Error: Server error.
-Payload:
+security:
+  basic:
+    enabled: false
+  ignored: /h2-console/**
 
-json
-Copy code
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+## Build Project
+
+mvn clean install      # for Maven Build
+mvn spring-boot:run    # For Spring Boot Build
+
+### API Endpoints
+Explore the interactive API documentation at Swagger UI.
+http://localhost:8080/swagger-ui/
+
+
+### Payload to Create a New Quiz
+
 {
-"questionText": "What is the capital of France?",
-"category": "Geography",
-"level": "Easy",
-"options": [
-{
-"optionText": "Paris",
-"isCorrect": true,
-"explanation": "Paris is the capital of France."
-},
-{
-"optionText": "London",
-"isCorrect": false,
-"explanation": "London is the capital of the United Kingdom."
-},
-{
-"optionText": "Berlin",
-"isCorrect": false,
-"explanation": "Berlin is the capital of Germany."
-},
-{
-"optionText": "Madrid",
-"isCorrect": false,
-"explanation": "Madrid is the capital of Spain."
+  "questionText": "What is the capital of France?",
+  "category": "Geography",
+  "level": "Easy",
+  "options": [
+    {
+      "optionText": "Paris",
+      "isCorrect": true,
+      "explanation": "Paris is the capital of France."
+    },
+    {
+      "optionText": "London",
+      "isCorrect": false,
+      "explanation": "London is the capital of the United Kingdom."
+    },
+    {
+      "optionText": "Berlin",
+      "isCorrect": false,
+      "explanation": "Berlin is the capital of Germany."
+    },
+    {
+      "optionText": "Madrid",
+      "isCorrect": false,
+      "explanation": "Madrid is the capital of Spain."
+    }
+  ]
 }
-]
-}
-Delete Question by ID
-http
-Copy code
-DELETE /api/questions/{id}
-Response Codes:
 
-204 No Content: Successfully deleted the question.
-404 Not Found: Question not found.
-500 Internal Server Error: Server error.
-Import Quiz Data from Excel
-http
-Copy code
-POST /api/import/excel
-Response Codes:
-
-200 OK: Quiz data imported successfully.
-400 Bad Request: Invalid data provided in the file.
-500 Internal Server Error: Failed to import quiz data due to server error.
-Payload:
-Multipart file containing quiz data in the specified Excel format.
-
-Download Excel Template
-http
-Copy code
-GET /api/import/template
-Response Codes:
-
-200 OK: Template downloaded successfully.
-500 Internal Server Error: Failed to download the template due to server error.
-Export Quiz Data to Excel
-http
-Copy code
-GET /api/export/excel
-Response Codes:
-
-200 OK: Successfully exported quiz data to Excel.
-500 Internal Server Error: Internal server error occurred while exporting quiz data.
-Excel Format
-The Excel file should be formatted as follows:
-
-Question	Category	Level	Option 1 Text	Correct 1	Explanation 1	Option 2 Text	Correct 2	Explanation 2	Option 3 Text	Correct 3	Explanation 3	Option 4 Text	Correct 4	Explanation 4
-What is the capital of France?	Geography	Easy	Paris	Yes	Paris is the capital of France.	London	No	London is the capital of the United Kingdom.	Berlin	No	Berlin is the capital of Germany.	Madrid	No	Madrid is the capital of Spain.
-Contributing
+### Contributing
 We welcome contributions from the community. Please follow these steps:
 
-Fork the Repository
-Create a Feature Branch
-sh
-Copy code
+## Fork the Repository
+
+- **Create a Feature Branch
 git checkout -b feature/YourFeatureBranchName
-Commit Your Changes
-sh
-Copy code
+
+- **Commit Your Changes
 git commit -m 'Add some feature'
-Push to the Branch
-sh
-Copy code
+
+- **Push to the Branch
 git push origin feature/YourFeatureBranchName
-Open a Pull Request
-Running Tests
-To run the tests for your Spring Boot application, including the ScoreServiceImplTest, you can use various tools and methods.
+
+
+### Running Tests
+To run the tests for your Spring Boot application, including the ScoreServiceImplTest, you can use various tools and methods:
 
 Using Maven
-sh
-Copy code
 mvn test
-Using Gradle
-sh
-Copy code
-./gradlew test
-Using an IDE
-IntelliJ IDEA
-Open the ScoreServiceImplTest class in IntelliJ IDEA.
-Right-click anywhere in the test class.
-Select Run 'ScoreServiceImplTest'.
-Alternatively, you can run all tests in your project by right-clicking on the test directory or the project root and selecting Run 'All Tests'.
 
-Eclipse
-Open the ScoreServiceImplTest class in Eclipse.
-Right-click anywhere in the test class.
-Select Run As > JUnit Test.
-Alternatively, you can run all tests in your project by right-clicking on the test directory or the project root and selecting Run As > JUnit Test.
+## Using an IDE
 
-Using Command Line with Spring Boot Plugin
-If you're using the Spring Boot Maven or Gradle plugin, you can run the tests using the following commands:
+### IntelliJ IDEA
 
-Maven
-sh
-Copy code
-mvn test
-License
+```console
+1. Open the `ScoreServiceImplTest` class in IntelliJ IDEA.
+2. Right-click anywhere in the test class.
+3. Select `Run 'ScoreServiceImplTest'`.
+4. Alternatively, you can run all tests in your project by right-clicking on the test directory or the project root and selecting `Run 'All Tests'`.
+
+
+### Eclipse
+1. Open the `ScoreServiceImplTest` class in Eclipse.
+2. Right-click anywhere in the test class.
+3. Select `Run As > JUnit Test`.
+4. Alternatively, you can run all tests in your project by right-clicking on the test directory or the project root and selecting `Run As > JUnit Test`.
+
+
+### License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-Acknowledgements
+### Acknowledgements
 Special thanks to the incredible community of developers and contributors who make this project possible.
 
 Feel free to explore our API documentation through the interactive Swagger UI and embark on a journey of creating an engaging quiz platform.
 
 For further inquiries or support, please contact us at alionuche2008@gmail.com.
 
-Happy Quizzing!
+### Happy Quizzing!
 
-Connect with Us
-Replace yourusername, yourdatabase, yourusername, yourpassword, and yourtwitterhandle with your actual details. This will give your README.md a professional and attractive appearance, enticing more views and engagement.
+### Connect with Us
+GitHub: [john12gate](https://github.com/john12gate)
+LinkedIn: [john-ali-software-developer](https://www.linkedin.com/in/john-ali-software-developer/)
+Medium: [internetgurus](https://medium.com/@internetgurus)
