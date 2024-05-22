@@ -1,6 +1,10 @@
 # Quiz Game Application Backend
 
-![GitHub stars](https://img.ields.io/github/stars/john12gate/quiz-game) ![GitHub forks](https://img.ields.io/github/forks/john12gate/quiz-game) ![GitHub issues](https://img.ields.io/github/issues/john12gate/quiz-game) ![GitHub license](https://img.ields.io/github/license/john12gate/quiz-game)
+![GitHub stars](https://img.shields.io/github/stars/john12gate/quiz-game)
+![GitHub forks](https://img.shields.io/github/forks/john12gate/quiz-game)
+![GitHub issues](https://img.shields.io/github/issues/john12gate/quiz-game)
+![GitHub license](https://img.shields.io/github/license/john12gate/quiz-game)
+
 
 Welcome to the **Quiz Game Application Backend**, a sophisticated and comprehensive API designed to manage quiz questions, track scores, and provide a seamless experience for developers and quiz enthusiasts alike.
 
@@ -121,7 +125,7 @@ http://localhost:8080/swagger-ui/
 
 
 ### Payload to Create a New Quiz
-
+```yaml
 {
   "questionText": "What is the capital of France?",
   "category": "Geography",
@@ -149,7 +153,7 @@ http://localhost:8080/swagger-ui/
     }
   ]
 }
-
+```
 ### Contributing
 We welcome contributions from the community. Please follow these steps:
 
@@ -180,7 +184,7 @@ mvn test
 2. Right-click anywhere in the test class.
 3. Select `Run 'ScoreServiceImplTest'`.
 4. Alternatively, you can run all tests in your project by right-clicking on the test directory or the project root and selecting `Run 'All Tests'`.
-
+```
 
 ### Eclipse
 1. Open the `ScoreServiceImplTest` class in Eclipse.
